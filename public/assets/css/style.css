@@ -1,0 +1,588 @@
+/* ================================================================
+   TABLE OF CONTENTS
+================================================================
+   1. VARIABLES & ROOT
+   2. GLOBAL RESET
+   3. BACKGROUND & BODY
+   4. AUTHENTICATION CARD (LOGIN/REGISTER)
+   5. DASHBOARD LAYOUT
+   6. NAVIGATION (BOTTOM NAV)
+   7. FORM ELEMENTS (INPUTS/BUTTONS)
+   8. ANIMATIONS
+================================================================
+*/
+
+:root {
+    color-scheme: dark;
+    --bg-dark: #050b1f;
+    --glass-bg: rgba(15, 28, 63, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --primary-blue: #2563eb;
+    --accent-glow: rgba(37, 99, 235, 0.4);
+    --income-color: #00d285;
+    --expense-color: #ff5e5e;
+    --text-white: #ffffff;
+    --text-dim: rgba(255, 255, 255, 0.6);
+}
+
+/* 2. GLOBAL RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    transition: all 0.3s ease;
+}
+
+/* 3. BACKGROUND & BODY */
+body {
+    background: radial-gradient(circle at 20% 30%, #0f1c3f, #050b1f);
+    color: var(--text-white);
+    min-height: 100vh;
+    padding-bottom: 110px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(rgba(37, 99, 235, 0.15) 1.5px, transparent 1.5px);
+    background-size: 35px 35px;
+    z-index: -1;
+}
+
+/* 4. AUTHENTICATION CARD */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.auth-card {
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+    min-height: 520px; /* ضمان ارتفاع موحد */
+    border-radius: 25px;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+}
+
+.card-left {
+    flex: 1;
+    padding: 40px;
+    background: url('../img/login-bg.png') center/cover;  
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.card-left::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 28, 63, 0.75);
+}
+
+.card-left h1, .card-left p {
+    position: relative;
+    z-index: 1;
+}
+
+.card-right {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 520px; /* تثبيت الارتفاع لمنع الاهتزاز عند التبديل */
+}
+
+.switch-buttons {
+    display: flex;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    margin-bottom: 30px;
+    padding: 5px;
+    z-index: 2;
+}
+
+.switch-buttons button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-white);
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 12px;
+}
+
+.switch-buttons button.active {
+    background: var(--primary-blue);
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.form-box {
+    position: absolute;
+    top: 130px; /* مكانه تحت أزرار التبديل */
+    left: 40px;
+    right: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.form-box.hidden {
+    display: flex !important; /* نستخدم flex مع opacity لمنع القفزة المفاجئة */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+}
+
+/* 5. DASHBOARD LAYOUT */
+.app-container {
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    margin-bottom: 25px;
+    background: var(--glass-bg);
+    border-radius: 18px;
+    border: 1px solid var(--glass-border);
+    position: relative;
+    overflow: visible;
+}
+.app-container {
+    overflow: visible;
+}
+.big-card {
+    background: linear-gradient(135deg, var(--primary-blue), #1d4ed8);
+    padding: 35px;
+    border-radius: 25px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 15px 30px var(--accent-glow);
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.small-card {
+    flex: 1;
+    background: var(--glass-bg);
+    padding: 22px;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid var(--glass-border);
+}
+
+.small-card.income h3 { color: var(--income-color); }
+.small-card.expense h3 { color: var(--expense-color); }
+
+.wide-card {
+    background: var(--glass-bg);
+    padding: 25px;
+    border-radius: 25px;
+    border: 1px solid var(--glass-border);
+    margin-bottom: 20px;
+}
+
+.transaction .income { color: var(--income-color); font-weight: bold; }
+.transaction .expense { color: var(--expense-color); font-weight: bold; }
+
+/* 6. NAVIGATION (BOTTOM NAV) */
+.bottom-nav {
+    position: fixed;
+    bottom: calc(15px + env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+max-width: 380px;
+    height: 75px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(25px);
+    border-radius: 40px;
+    border: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    z-index: 1000;
+
+    position: fixed;
+    overflow: hidden;
+}
+
+.nav-item {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    z-index: 2;   /* 👈 أعلى */
+}
+
+.indicator {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    background: var(--primary-blue);
+    border-radius: 50%;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1;   /* 👈 أقل */
+}
+/* 7. FORM ELEMENTS */
+input, select, button {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.07);
+    color: white;
+    outline: none;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 15px;
+    padding-right: 40px;
+}
+
+select option, datalist option {
+    background-color: #050b1f !important;
+    color: #ffffff !important;
+}
+
+input:focus {
+    border-color: var(--primary-blue);
+    background: rgba(255,255,255,0.1);
+}
+
+.main-btn {
+    background: linear-gradient(135deg, var(--primary-blue), #1d4ed8);
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+}
+
+.main-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px var(--accent-glow);
+}
+
+.error-msg {
+    color: var(--expense-color);
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* 8. ANIMATIONS */
+.section { display: none; }
+
+.active-section {
+    display: block;
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+    .top-bar {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .top-bar form {
+        order: 3;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .bottom-nav {
+        bottom: 15px;
+        width: 95%;
+    }
+    .table-wrapper {
+        white-space: nowrap;
+    }
+}
+
+.hidden { display: none; }
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px;
+    margin-bottom: 25px;
+    background: var(--glass-bg);
+    border-radius: 18px;
+    border: 1px solid var(--glass-border);
+}
+.settings-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s ease;
+}
+
+.settings-btn:hover {
+    background: rgba(255,255,255,0.1);
+    transform: scale(1.1);
+}
+
+.settings-btn:active {
+    transform: scale(0.95);
+}
+.settings-menu {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: rgba(15, 28, 63, 0.95);
+    backdrop-filter: blur(20px);
+    width: 190px;
+    border-radius: 12px;
+    display: none;
+    flex-direction: column;
+    padding: 10px 0;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    border: 1px solid var(--glass-border);
+    z-index: 9999;
+}
+
+.settings-menu a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.settings-menu a:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.show-menu {
+    display: flex !important;
+}
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.05);
+}
+
+.transaction .left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.category-box {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #6a5acd, #4b3bbd);
+    color: white;
+    width: fit-content;
+}
+
+.transaction small {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.income {
+    color: #00ff9d;
+    font-weight: bold;
+}
+
+.expense {
+    color: #ff4d6d;
+    font-weight: bold;
+}
+/* Category Section - نفس ستايل الصفحة */
+
+.category-grid {
+    background: var(--glass-bg);
+    padding: 25px;
+    border-radius: 25px;
+    border: 1px solid var(--glass-border);
+    margin-bottom: 20px;
+    backdrop-filter: blur(20px);
+}
+
+.category-grid h4 {
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: var(--text-white);
+}
+
+.category-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.category-row:last-child {
+    border-bottom: none;
+}
+
+.category-row span:last-child {
+    font-weight: bold;
+}
+.edit-btn {
+    margin-right: 8px;
+    text-decoration: none;
+    color: #00d285;
+    font-weight: bold;
+}
+
+.progress-bar{
+width:100%;
+height:14px;
+background:#e5e5e5;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.progress-fill{
+height:100%;
+background:#22c55e;
+transition:width 0.6s ease;
+}
+
+.progress-text{
+margin-top:8px;
+font-weight:bold;
+color:#22c55e;
+}
+
+.goal-progress p{
+margin-top:10px;
+font-weight:bold;
+}
+
+.delete-goal{
+display:inline-block;
+margin-top:10px;
+color:#ff4d7d;
+text-decoration:none;
+}
+
+/* ========================================= */
+/* 📱 MOBILE RESPONSIVENESS                  */
+/* ========================================= */
+@media screen and (max-width: 768px) {
+    /* Auth Page - Photo on Top, Form Below */
+    .center-container {
+        padding: 20px;
+        align-items: center;
+        height: min-content;
+        min-height: 100vh;
+    }
+
+    .auth-card {
+        flex-direction: column;
+        max-width: 100%;
+        min-height: auto;
+        /* Restore original glass effect */
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 25px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card-left {
+        min-height: 250px;
+        flex: none;
+        padding: 30px 20px;
+        border-radius: 25px 25px 0 0;
+        background: url('../img/login-bg.png') center/cover no-repeat;
+    }
+
+    .card-left::after {
+        display: block; /* Restore overlay on the image */
+        border-radius: 25px 25px 0 0;
+    }
+    
+    .card-left h1 {
+        font-size: 26px;
+        color: #fff;
+    }
+    
+    .card-left p {
+        font-size: 14px;
+    }
+    
+    .card-right {
+        padding: 30px;
+        border-radius: 0 0 25px 25px;
+        flex: auto;
+    }
+
+    .switch-buttons {
+        margin-bottom: 25px;
+    }
+
+    /* Dashboard and Navbar */
+    .dashboard, .row {
+        grid-template-columns: 1fr;
+    }
+
+    .bottom-nav {
+        padding: 10px 15px;
+    }
+
+    .big-card h1 {
+        font-size: 32px;
+    }
+}
