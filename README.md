@@ -37,9 +37,11 @@ Additionally, I integrated **Artificial Intelligence (AI)** during the developme
 **My conclusion:** AI is an incredibly powerful tool that can dramatically speed up development and produce professional results. However, developers who use it blindly without grasping the underlying logic will ultimately lose out in the future. As a true software engineer, it is absolutely essential to understand exactly where every line of code comes from and what it does.
 
 ### 📸 Screenshots
-*(Don't forget to upload and link a few screenshots of your dashboard here!)*
+
 
 ---
+
+link : https://hasimmohebidden.com.tr
 
 <br>
 
@@ -74,7 +76,10 @@ Ayrıca, geliştirme aşamasında yapay zekayı (AI), gerçek dünya yazılım m
 **Çıkarımım:** Yapay zeka, geliştirme sürecini inanılmaz derecede hızlandırabilen ve profesyonel sonuçlar üretebilen çok güçlü bir araçtır. Ancak, arka plandaki mantığı kavramadan onu körü körüne kullanan yazılımcılar gelecekte kesinlikle kaybedeceklerdir. Gerçek bir yazılım mühendisi olarak, her satır kodun tam olarak nereden geldiğini ve ne işe yaradığını anlamak kesinlikle zorunludur.
 
 ### 📸 Ekran Görüntüleri
-*(Buraya projenizin ekran görüntülerini eklemeyi unutmayın!)*
+
 
 ---
 *Developed by [Hasim Mohebidden](https://www.hasimmohebidden.com.tr)*
+
+
+sitenin linki : https://hasimmohebidden.com.tr
